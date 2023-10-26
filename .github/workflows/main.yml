@@ -26,11 +26,11 @@ jobs:
         distribution: 'temurin'
         # maven-version: 3.8
           
-    # - name: Debug Environment
-    #   run: |
-    #     echo "PATH: $PATH"
-    #     which java
-    #     java -version
+    - name: Debug Environment
+      run: |
+        echo "PATH: $PATH"
+        which java
+        java -version
 
     # - name: Set Java 18 as Default
     #   run: echo 'export JAVA_HOME="/usr/libexec/java_home -v 19"' >> $GITHUB_ENV
@@ -41,12 +41,21 @@ jobs:
     #     which mvn
 
     # - name: Build with Maven
-    #   run: mvn clean install -DskipTests=tru  
+    #   run: mvn clean install -DskipTests=true
 
     - name: Install and Run Appium Server
       run: |
         chmod +x ./scripts/RunAppiumServer.sh # install and run appium server in the background
         ./scripts/RunAppiumServer.sh > appium_server_log.txt
+        cat appium_server_log.txt
+
+    # - name: Run Appium Tests
+    #   run: |
+    #     # Wait for Appium server to start (you can adjust the sleep duration as needed)
+    #     sleep 10
+    #     # Extract Appium server URL from the log file
+    #     appium_server_url=$(grep -o 'http://[^ ]*' appium_server_log.txt)
+    #     echo "Appium Server URL: $appium_server_url"
 
     - name: Run Appium Tests
       uses: reactivecircus/android-emulator-runner@v2 # install and create the Emulator
@@ -62,19 +71,4 @@ jobs:
           #  export ANDROID_HOME=$ANDROID_HOME"
           #  export PATH=$PATH:$ANDROID_HOME/tools:$ANDROID_HOME/platform-tools
           # /usr/local/bin/mvn test # running our test with info to check the results
-          #mvn clean test -Pandroid
-
-    - name: Start Emulator
-      run: emulator -avd test -no-audio -no-window -gpu swiftshader -no-boot-anim &
-
-    - name: Wait for Emulator to Start
-      run: |
-          boot_completed=""
-          until [[ "$boot_completed" == "1" ]]; do
-            boot_completed=$(adb shell getprop sys.boot_completed | tr -d '\r')
-            echo "Waiting for emulator to start..."
-            sleep 5
-          done
-
-    - name: Run Android Tests
-      run: mvn clean test -Pandroid
+          mvn clean test -Pandroid
