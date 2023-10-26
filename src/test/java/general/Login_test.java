@@ -149,10 +149,10 @@ public class Login_test
 
 		cap.setCapability(MobileCapabilityType.NO_RESET, true); // It will always clear the caches
 
-		cap.setCapability(MobileCapabilityType.DEVICE_NAME, "R9ZRA09AK2M");
+		cap.setCapability(MobileCapabilityType.DEVICE_NAME, "Android Emulator");
 		// cap.setCapability(MobileCapabilityType.DEVICE_NAME,"a1e5e8e3");
 
-		driver = new AndroidDriver<MobileElement>(new URL("http://127.0.0.1:4723/wd/hub/"), cap);
+		driver = new AndroidDriver<MobileElement>(new URL("http://127.0.0.1:4723/"), cap);
 		WebDriverWait wait2 = new WebDriverWait(driver, 40);
 		
 		//Open Gmail

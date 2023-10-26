@@ -41,10 +41,10 @@ public class po_invoice_quote
 		//cap.setCapability("appPackage", "com.impossible_research.sandbox.starboard");
 		//cap.setCapability("appActivity", "com.impossible_research.sandbox.starboard.ui.splash.view.SplashActivity");  
 		
-		cap.setCapability(MobileCapabilityType.DEVICE_NAME,"R9ZRA09AK2M");
+		cap.setCapability(MobileCapabilityType.DEVICE_NAME,"Android Emulator");
 		//cap.setCapability(MobileCapabilityType.DEVICE_NAME,"a1e5e8e3");
 					
-		AndroidDriver<MobileElement> driver = new AndroidDriver<MobileElement>(new URL("http://127.0.0.1:4723/wd/hub/"),cap);
+		AndroidDriver<MobileElement> driver = new AndroidDriver<MobileElement>(new URL("http://127.0.0.1:4723/"),cap);
 			
 		Thread.sleep(5000);
 		

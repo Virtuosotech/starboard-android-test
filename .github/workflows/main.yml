@@ -1,0 +1,80 @@
+name: Appium CI
+
+on:
+  push:
+    branches: [ "main" ]
+  pull_request:
+    branches: [ "main" ]
+
+# permissions:
+#   contents: read
+
+jobs:
+  build:
+    runs-on: macos-latest # the machine type
+    strategy: # we are using strategy if we need to run on parallel with different devices and version
+      matrix:
+        api-level: [29] #Google api level for example [25,23,28] 
+        target: [default]
+    steps:
+    - uses: actions/checkout@v4 #checkout the code 
+
+    - name: Set up JDK 19
+      uses: actions/setup-java@v3
+      with:
+        java-version: '19'
+        distribution: 'temurin'
+        # maven-version: 3.8
+          
+    # - name: Debug Environment
+    #   run: |
+    #     echo "PATH: $PATH"
+    #     which java
+    #     java -version
+
+    # - name: Set Java 18 as Default
+    #   run: echo 'export JAVA_HOME="/usr/libexec/java_home -v 19"' >> $GITHUB_ENV
+
+    # - name: Debug Environment
+    #   run: |
+    #     echo "PATH: $PATH"
+    #     which mvn
+
+    # - name: Build with Maven
+    #   run: mvn clean install -DskipTests=tru  
+
+    - name: Install and Run Appium Server
+      run: |
+        chmod +x ./scripts/RunAppiumServer.sh # install and run appium server in the background
+        ./scripts/RunAppiumServer.sh > appium_server_log.txt
+
+    - name: Run Appium Tests
+      uses: reactivecircus/android-emulator-runner@v2 # install and create the Emulator
+      with:
+        api-level: ${{ matrix.api-level }}
+        target: ${{ matrix.target }}
+        arch: x86_64
+        profile: Nexus 6
+        script: |
+          # adb kill-server
+          # adb start-server
+          # export JAVA_HOME="/usr/libexec/java_home -v 18"
+          #  export ANDROID_HOME=$ANDROID_HOME"
+          #  export PATH=$PATH:$ANDROID_HOME/tools:$ANDROID_HOME/platform-tools
+          # /usr/local/bin/mvn test # running our test with info to check the results
+          #mvn clean test -Pandroid
+
+    - name: Start Emulator
+      run: emulator -avd test -no-audio -no-window -gpu swiftshader -no-boot-anim &
+
+    - name: Wait for Emulator to Start
+      run: |
+          boot_completed=""
+          until [[ "$boot_completed" == "1" ]]; do
+            boot_completed=$(adb shell getprop sys.boot_completed | tr -d '\r')
+            echo "Waiting for emulator to start..."
+            sleep 5
+          done
+
+    - name: Run Android Tests
+      run: mvn clean test -Pandroid

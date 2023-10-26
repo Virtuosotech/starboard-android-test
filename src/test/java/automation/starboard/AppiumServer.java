@@ -58,7 +58,7 @@ public class AppiumServer {
 			
 			cap.setCapability(MobileCapabilityType.NO_RESET,true); // It will always clear the caches
 						
-			cap.setCapability(MobileCapabilityType.DEVICE_NAME,"R9ZRA09AK2M");
+			cap.setCapability(MobileCapabilityType.DEVICE_NAME,"Android Emulator");
 			 
 			cap.setCapability("platformVersion", "12");
 

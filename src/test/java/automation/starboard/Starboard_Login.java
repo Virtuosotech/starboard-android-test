@@ -25,7 +25,7 @@ public class Starboard_Login {
 		cap.setCapability("app","/home/purvish/Downloads/Starboard-debug-1.5.1-20-03-2023.apk");
 		//cap.setCapability("appium:systemPort", 6);		
 			
-			AndroidDriver<MobileElement> driver = new AndroidDriver<MobileElement>(new URL("http://127.0.0.1:4723/wd/hub/"),cap);
+			AndroidDriver<MobileElement> driver = new AndroidDriver<MobileElement>(new URL("http://127.0.0.1:4723/"),cap);
 			
 		Thread.sleep(5000);
 		//click on skip button
