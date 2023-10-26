@@ -148,7 +148,7 @@ public class Login_test
 		cap.setCapability(MobileCapabilityType.PLATFORM_NAME, MobilePlatform.ANDROID);
 
 		cap.setCapability(MobileCapabilityType.NO_RESET, true); // It will always clear the caches
-
+		cap.setCapability(MobileCapabilityType.AUTOMATION_NAME, "uiautomator2");
 		cap.setCapability(MobileCapabilityType.DEVICE_NAME, "Android Emulator");
 		// cap.setCapability(MobileCapabilityType.DEVICE_NAME,"a1e5e8e3");
 
