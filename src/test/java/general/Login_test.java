@@ -69,7 +69,7 @@ public class Login_test
 		driver.closeApp();
 
 		// Open Gmail
-		driver.activateApp("com.google.android.gm");
+		driver().startActivity("com.google.android.gm", "ConversationListActivityGmail");
 
 		// Wait for new magic link mail
 		wait1.until(ExpectedConditions.visibilityOfElementLocated(
@@ -156,7 +156,7 @@ public class Login_test
 		WebDriverWait wait2 = new WebDriverWait(driver, 40);
 		
 		//Open Gmail
-		driver.activateApp("com.google.android.gm");
+		driver().startActivity("com.google.android.gm", "ConversationListActivityGmail");
 		
 		//Click on SKIP
 		wait2.until(ExpectedConditions.elementToBeClickable(By.xpath("//android.widget.TextView[@text='SKIP']"))).click();
