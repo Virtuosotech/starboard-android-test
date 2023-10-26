@@ -43,7 +43,7 @@ public class Starboard_Login {
 		driver.closeApp();
 		
 		// to open gmail and click on thye link
-		driver.startActivity("com.google.android.gm", "ConversationListActivityGmail");
+		driver.activateApp("com.google.android.gm");
 
 		driver.navigate().refresh();
 	

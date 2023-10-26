@@ -60,7 +60,7 @@ public class Base
 		WebDriverWait wait2 = new WebDriverWait(driver, 40);
 		
 		// Open Gmail
-		driver.startActivity("com.google.android.gm", "ConversationListActivityGmail");
+		driver.activateApp("com.google.android.gm");
 		
 		wait2.until(ExpectedConditions.elementToBeClickable(By.xpath("//android.widget.TextView[@text='SKIP']"))).click();
 		
@@ -102,7 +102,7 @@ public class Base
 		
 		wait2.until(ExpectedConditions.elementToBeClickable(By.xpath("//android.widget.TextView[@text='TAKE ME TO GMAIL']"))).click();
 		
-		driver.startActivity("com.google.android.gm", "ConversationListActivityGmail");
+		driver.activateApp("com.google.android.gm");
 		
 		
 		  driver.startActivity(new
