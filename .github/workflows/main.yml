@@ -50,6 +50,7 @@ jobs:
         appium -v
         npm -g install npm
         npm i appium-uiautomator2-driver
+        appium driver install uiautomator2
         appium > /dev/null &
 
     # - name: Run Appium Tests
