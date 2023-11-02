@@ -23,6 +23,7 @@ public class Starboard_Login {
 		cap.setCapability(MobileCapabilityType.PLATFORM_NAME, MobilePlatform.ANDROID);
 		cap.setCapability("appium:uiautomator2ServerLaunchTimeout", 60000);
 		cap.setCapability("appium:uiautomator2ServerInstallTimeout", 60000);
+		cap.setCapability("appium:enforceXPath1", true);
 		
 		cap.setCapability("app","/home/purvish/Downloads/Starboard-debug-1.5.1-20-03-2023.apk");
 		//cap.setCapability("appium:systemPort", 6);		
