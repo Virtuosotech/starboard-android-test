@@ -42,6 +42,7 @@ public class po_invoice_quote
 		//cap.setCapability("appActivity", "com.impossible_research.sandbox.starboard.ui.splash.view.SplashActivity");  
 		
 		cap.setCapability(MobileCapabilityType.DEVICE_NAME,"Android Emulator");
+		cap.setCapability("uiautomator2ServerLaunchTimeout", 60000);
 		//cap.setCapability(MobileCapabilityType.DEVICE_NAME,"a1e5e8e3");
 					
 		AndroidDriver<MobileElement> driver = new AndroidDriver<MobileElement>(new URL("http://127.0.0.1:4723/"),cap);
