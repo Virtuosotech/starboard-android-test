@@ -46,8 +46,11 @@ jobs:
     - name: Install and Run Appium Server
       run: |
         chmod +x ./scripts/RunAppiumServer.sh # install and run appium server in the background
-        ./scripts/RunAppiumServer.sh > appium_server_log.txt
-        cat appium_server_log.txt
+        npm install -g appium@v1.22
+        appium -v
+        npm -g install npm
+        npm i appium-uiautomator2-driver
+        appium > /dev/null &
 
     # - name: Run Appium Tests
     #   run: |
