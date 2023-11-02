@@ -54,6 +54,7 @@ public class Base
 		cap.setCapability(MobileCapabilityType.AUTOMATION_NAME, "uiautomator2");
 		cap.setCapability(MobileCapabilityType.DEVICE_NAME, "Android Emulator");
 		cap.setCapability("appium:uiautomator2ServerLaunchTimeout", 60000);
+		cap.setCapability("appium:uiautomator2ServerInstallTimeout", 60000);
 		// cap.setCapability(MobileCapabilityType.DEVICE_NAME,"a1e5e8e3");
 
 		driver = new AndroidDriver<MobileElement>(new URL("http://127.0.0.1:4723/"), cap);
