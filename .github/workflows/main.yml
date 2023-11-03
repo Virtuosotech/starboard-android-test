@@ -54,7 +54,7 @@ jobs:
         appium > /dev/null &
 
     - name: Start Emulator
-      run: emulator -avd emulator-29 -no-skin -no-audio -no-window -camera-back emulated -qemu -enable-kvm
+      run: emulator -avd emulator-5554 -no-skin -no-audio -no-window -camera-back emulated -qemu -enable-kvm
 
     - name: Wait for Emulator
       run: |
