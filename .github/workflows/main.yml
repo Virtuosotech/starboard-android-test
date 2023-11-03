@@ -69,10 +69,16 @@ jobs:
         profile: Nexus 6
         script: |
           adb devices
-          adb shell screenrecord /sdcard/emulator-video.mp4
+          adb shell screenrecord /sdcard/emulator-video.mp4 &
           adb install Apk/starboard-dev.apk
           mvn clean test -Pandroid
       continue-on-error: true
+
+    - name: Upload Screenshot
+      uses: actions/upload-artifact@v2
+      with:
+        name: screenshot-artifact
+        path: screenshotBeforeClick.png
 
     - name: Pull Video Recording
       run: |
