@@ -53,26 +53,27 @@ jobs:
         appium driver install uiautomator2
         appium > /dev/null &
 
-    # - name: Run Appium Tests
-    #   run: |
-    #     # Wait for Appium server to start (you can adjust the sleep duration as needed)
-    #     sleep 10
-    #     # Extract Appium server URL from the log file
-    #     appium_server_url=$(grep -o 'http://[^ ]*' appium_server_log.txt)
-    #     echo "Appium Server URL: $appium_server_url"
-    - name: Start emulator and run test
-      uses: reactivecircus/android-emulator-runner@v2 # install and create the Emulator
-      with:
-        api-level: ${{ matrix.api-level }}
-        target: ${{ matrix.target }}
-        arch: x86_64
-        profile: Nexus 6
-        script: |
-          adb devices
-          adb shell screenrecord /sdcard/emulator-video.mp4
-          adb install Apk/starboard-dev.apk
-          mvn clean test -Pandroid
-          adb shell pkill -2 -l 1 screenrecord
+    - name: Start Emulator
+      run: emulator -avd emulator-29 -no-skin -no-audio -no-window -camera-back emulated -qemu -enable-kvm
+
+    - name: Wait for Emulator
+      run: |
+        i=0
+        while [ $i -le 180 ]; do
+          adb wait-for-device
+          sleep 1
+          i=$((i + 1))
+        done
+      continue-on-error: true
+
+    - name: Start Screen Recording
+      run: adb shell screenrecord /sdcard/emulator-video.mp4
+
+    - name: Run Your Test Suite
+      run: mvn clean test -Pandroid
+
+    - name: Stop Screen Recording
+      run: adb shell pkill -2 -l 1 screenrecord
 
     - name: Pull Video Recording
       run: adb pull /sdcard/emulator-video.mp4 ${{ runner.workspace }}/emulator-video.mp4
