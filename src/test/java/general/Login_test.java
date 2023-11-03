@@ -23,6 +23,11 @@ import io.appium.java_client.android.AndroidDriver;
 import io.appium.java_client.remote.MobileCapabilityType;
 import io.appium.java_client.remote.MobilePlatform;
 import io.qameta.allure.Allure;
+import org.openqa.selenium.OutputType;
+import org.openqa.selenium.TakesScreenshot;
+import org.openqa.selenium.WebDriver;
+import org.apache.commons.io.FileUtils;
+import java.io.File;
 
 public class Login_test
 
@@ -161,7 +166,11 @@ public class Login_test
 		
 		//Open Gmail
 		driver.activateApp("com.google.android.gm");
-		
+
+		// Take a screenshot before clicking the element
+		File screenshotBeforeClick = ((TakesScreenshot) driver).getScreenshotAs(OutputType.FILE);
+		// Save the screenshot to a file
+		FileUtils.copyFile(screenshotBeforeClick, new File("screenshotBeforeClick.png"));
 		//Click on SKIP
 		wait2.until(ExpectedConditions.elementToBeClickable(By.xpath("//android.widget.TextView[@text='SKIP']"))).click();
 		
