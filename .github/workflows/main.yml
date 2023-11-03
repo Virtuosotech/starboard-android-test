@@ -67,6 +67,8 @@ jobs:
         target: ${{ matrix.target }}
         arch: x86_64
         profile: Nexus 6
+        script: |
+          adb devices
  
     - name: Wait for emulator to start
       run: |
