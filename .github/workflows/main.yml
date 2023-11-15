@@ -44,14 +44,7 @@ jobs:
     #   run: mvn clean install -DskipTests=true
     - name: Run FFMPEG
       run: |
-        brew install ffmpeg &&
-        available_screens=$(ffmpeg -f avfoundation -list_devices true -i "") &&
-        echo "Available screens:" &&
-        echo "$available_screens" &&
-        primary_screen=$(echo "$available_screens" | grep "0: Capture screen" | awk '{print $3}') &&
-        echo "Primary screen:" &&
-        echo "$primary_screen" &&
-        ffmpeg -f avfoundation -i "0" output.mkv
+        brew install ffmpeg
   
     - name: Install and Run Appium Server
       run: |
@@ -59,6 +52,13 @@ jobs:
         npm install -g appium
         appium -v
         npm -g install npm
+        available_screens=$(ffmpeg -f avfoundation -list_devices true -i "") &&
+        echo "Available screens:" &&
+        echo "$available_screens" &&
+        primary_screen=$(echo "$available_screens" | grep "0: Capture screen" | awk '{print $3}') &&
+        echo "Primary screen:" &&
+        echo "$primary_screen" &&
+        ffmpeg -f avfoundation -i "0" output.mkv
         npm i appium-uiautomator2-driver
         appium driver install uiautomator2
         appium > /dev/null &
