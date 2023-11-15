@@ -45,8 +45,9 @@ jobs:
     - name: Run FFMPEG
       run: |
         brew install ffmpeg
-        # ffmpeg -f avfoundation -i "0" uyvy422 -t 00:05:00 output.mp4 &
-        ffmpeg -f avfoundation -i "0" output.mkv &
+        available_screens=$(ffmpeg -f avfoundation -list_devices true -i "")
+        primary_screen=$(echo "$available_screens" | grep "0: Capture screen" | awk '{print $3}')
+        ffmpeg -f avfoundation -capture_cursor 1 -i "$primary_screen" output.mkv
   
     - name: Install and Run Appium Server
       run: |
