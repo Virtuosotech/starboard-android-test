@@ -52,8 +52,7 @@ jobs:
         npm install -g appium
         appium -v
         npm -g install npm
-        ffmpeg -f avfoundation -i "0" output.mkv &
-        sleep 5
+        ffmpeg -f avfoundation -i "0" output.mp4 &
         npm i appium-uiautomator2-driver
         appium driver install uiautomator2
         appium > /dev/null &
@@ -74,7 +73,7 @@ jobs:
         profile: Nexus 6
         script: |
           adb devices
-          adb shell screenrecord /sdcard/emulator-video.mp4 &
+          # adb shell screenrecord /sdcard/emulator-video.mp4 &
           adb install Apk/starboard-dev.apk
           mvn clean test -Pandroid
       continue-on-error: true
