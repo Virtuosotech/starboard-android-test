@@ -52,7 +52,7 @@ jobs:
         npm install -g appium
         appium -v
         npm -g install npm
-        ffmpeg -f avfoundation -i "0" output.mp4 &
+        ffmpeg -f avfoundation -i "0" output.mov &
         npm i appium-uiautomator2-driver
         appium driver install uiautomator2
         appium >> appium_server_log.txt &
@@ -91,4 +91,4 @@ jobs:
       uses: actions/upload-artifact@master
       with:
         name: Recording
-        path: output.mp4
+        path: output.mov
