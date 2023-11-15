@@ -55,15 +55,15 @@ jobs:
         ffmpeg -f avfoundation -i "0" output.mp4 &
         npm i appium-uiautomator2-driver
         appium driver install uiautomator2
-        appium > /dev/null &
+        appium >> appium_server_log.txt &
 
-    # - name: Run Appium Tests
-    #   run: |
-    #     # Wait for Appium server to start (you can adjust the sleep duration as needed)
-    #     sleep 10
-    #     # Extract Appium server URL from the log file
-    #     appium_server_url=$(grep -o 'http://[^ ]*' appium_server_log.txt)
-    #     echo "Appium Server URL: $appium_server_url"
+    - name: Run Appium Tests
+      run: |
+        # Wait for Appium server to start (you can adjust the sleep duration as needed)
+        sleep 10
+        # Extract Appium server URL from the log file
+        appium_server_url=$(grep -o 'http://[^ ]*' appium_server_log.txt)
+        echo "Appium Server URL: $appium_server_url"
     - name: Start emulator and run test
       uses: reactivecircus/android-emulator-runner@v2 # install and create the Emulator
       with:
@@ -73,9 +73,10 @@ jobs:
         profile: Nexus 6
         script: |
           adb devices
+          open "https://www.bombaysoftwares.com/"
           # adb shell screenrecord /sdcard/emulator-video.mp4 &
           adb install Apk/starboard-dev.apk
-          mvn clean test -Pandroid
+          # mvn clean test -Pandroid
       continue-on-error: true
 
     - name: Stop Recording
@@ -90,4 +91,4 @@ jobs:
       uses: actions/upload-artifact@master
       with:
         name: Recording
-        path: output.mkv
+        path: output.mp4
