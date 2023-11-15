@@ -42,7 +42,12 @@ jobs:
 
     # - name: Build with Maven
     #   run: mvn clean install -DskipTests=true
-
+    - name: Run FFMPEG
+      run: |
+        brew install ffmpeg
+        # ffmpeg -f avfoundation -i "0" uyvy422 -t 00:05:00 output.mp4 &
+        ffmpeg -f avfoundation -i "0" output.mkv &
+  
     - name: Install and Run Appium Server
       run: |
         chmod +x ./scripts/RunAppiumServer.sh # install and run appium server in the background
@@ -60,33 +65,30 @@ jobs:
     #     # Extract Appium server URL from the log file
     #     appium_server_url=$(grep -o 'http://[^ ]*' appium_server_log.txt)
     #     echo "Appium Server URL: $appium_server_url"
-    - name: Start emulator and run test
-      uses: reactivecircus/android-emulator-runner@v2 # install and create the Emulator
-      with:
-        api-level: ${{ matrix.api-level }}
-        target: ${{ matrix.target }}
-        arch: x86_64
-        profile: Nexus 6
-        script: |
-          adb devices
-          adb shell screenrecord /sdcard/emulator-video.mp4 &
-          adb install Apk/starboard-dev.apk
-          mvn clean test -Pandroid
+    # - name: Start emulator and run test
+    #   uses: reactivecircus/android-emulator-runner@v2 # install and create the Emulator
+    #   with:
+    #     api-level: ${{ matrix.api-level }}
+    #     target: ${{ matrix.target }}
+    #     arch: x86_64
+    #     profile: Nexus 6
+    #     script: |
+    #       adb devices
+    #       adb shell screenrecord /sdcard/emulator-video.mp4 &
+    #       adb install Apk/starboard-dev.apk
+    #       mvn clean test -Pandroid
+    #   continue-on-error: true
+
+    - name: Stop Recording
       continue-on-error: true
-
-    - name: Upload Screenshot
-      uses: actions/upload-artifact@v2
-      with:
-        name: screenshot-artifact
-        path: screenshotBeforeClick.png
-
-    - name: Pull Video Recording
+      shell: bash
       run: |
-        adb shell pkill -2 -l 1 screenrecord
-        adb pull /sdcard/emulator-video.mp4 ${{ runner.workspace }}/emulator-video.mp4
-
-    - name: Upload Video Recording
-      uses: actions/upload-artifact@v2
+        PID=$(ps aux | grep -m 1 ffmpeg | awk '{print $2}')
+        python -c "import os, signal; os.kill($PID, signal.SIGINT)"
+    - name: upload video
+      if: always()
+      continue-on-error: true
+      uses: actions/upload-artifact@master
       with:
-        name: emulator-video
-        path: ${{ runner.workspace }}/emulator-video.mp4
+        name: Recording
+        path: output.mkv
