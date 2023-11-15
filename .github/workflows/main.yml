@@ -44,13 +44,13 @@ jobs:
     #   run: mvn clean install -DskipTests=true
     - name: Run FFMPEG
       run: |
-        brew install ffmpeg
-        available_screens=$(ffmpeg -f avfoundation -list_devices true -i "")
-        echo "Available screens:"
-        echo "$available_screens"
-        primary_screen=$(echo "$available_screens" | grep "0: Capture screen" | awk '{print $3}')
-        echo "Primary screen:"
-        echo "$primary_screen"
+        brew install ffmpeg &&
+        available_screens=$(ffmpeg -f avfoundation -list_devices true -i "") &&
+        echo "Available screens:" &&
+        echo "$available_screens" &&
+        primary_screen=$(echo "$available_screens" | grep "0: Capture screen" | awk '{print $3}') &&
+        echo "Primary screen:" &&
+        echo "$primary_screen" &&
         ffmpeg -f avfoundation -i "0" output.mkv
   
     - name: Install and Run Appium Server
