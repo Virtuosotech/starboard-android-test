@@ -52,7 +52,8 @@ jobs:
         npm install -g appium
         appium -v
         npm -g install npm
-        ffmpeg -f avfoundation -i "0" output.mkv
+        ffmpeg -f avfoundation -i "0" output.mkv &
+        sleep 5
         npm i appium-uiautomator2-driver
         appium driver install uiautomator2
         appium > /dev/null &
