@@ -46,8 +46,12 @@ jobs:
       run: |
         brew install ffmpeg
         available_screens=$(ffmpeg -f avfoundation -list_devices true -i "")
+        echo "Available screens:"
+        echo "$available_screens"
         primary_screen=$(echo "$available_screens" | grep "0: Capture screen" | awk '{print $3}')
-        ffmpeg -f avfoundation -capture_cursor 1 -i "0" output.mkv
+        echo "Primary screen:"
+        echo "$primary_screen"
+        ffmpeg -f avfoundation -i "0" output.mkv
   
     - name: Install and Run Appium Server
       run: |
